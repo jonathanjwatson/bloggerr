@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Post from "./components/Post/Post";
+import Posts from "./components/Posts/Posts";
 
 function App() {
   // 1. Hard code your UI.
@@ -27,18 +27,8 @@ function App() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-6">
-          <h1>All Posts</h1>
-          {posts.map((post) => (
-            <Post {...post} key={post.id} />
-          ))}
-        </div>
-        <div className="col-6">
-          <h1>My Posts</h1>
-          {myPosts.map((post) => (
-            <Post {...post} key={post.id} />
-          ))}
-        </div>
+        <Posts posts={posts} title="All Posts"/>
+        <Posts posts={myPosts} title="My Posts"/>
       </div>
     </div>
   );
