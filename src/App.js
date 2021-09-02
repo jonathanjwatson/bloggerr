@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Posts from "./components/Posts/Posts";
 import { useDispatch, useSelector } from "react-redux";
-import { getArticles } from "./redux/actions/index";
+import { getArticles, getArticlesById } from "./redux/actions/index";
 
 function App() {
+  const [input, setInput] = useState("")
   // 1. Hard code your UI.
   // 2. Hard code data, and set the UI to use that data.
   // 3. Dynamically get my data.
@@ -13,6 +14,7 @@ function App() {
   // const [myPosts, setMyPosts] = useState([]);
 
   const posts = useSelector((state) => state.articles);
+  const postsById = useSelector((state) => state.articlesById);
   const error = useSelector((state) => state.error);
   const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
@@ -21,6 +23,10 @@ function App() {
     dispatch(getArticles());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  const getById = (id) => {
+    dispatch(getArticlesById(parseInt(id)))
+  }
 
   // useEffect(() => {
   //   axios
@@ -46,9 +52,11 @@ function App() {
 
   return (
     <div className="container">
+        <button onClick={() => getById(input)}>user id</button>
+        <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
       <div className="row">
         <Posts posts={posts} title="All Posts" />
-        {/* <Posts posts={myPosts} title="My Posts" /> */}
+        <Posts posts={postsById} title="My Posts" />
       </div>
     </div>
   );
